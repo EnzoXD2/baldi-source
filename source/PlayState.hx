@@ -1218,6 +1218,10 @@ class PlayState extends MusicBeatState
 		kadeEngineWatermark.cameras = [camHUD];
 		if (loadRep)
 			replayTxt.cameras = [camHUD];
+				
+			#if android
+                        addAndroidControls();
+                        #end
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -1384,7 +1388,11 @@ class PlayState extends MusicBeatState
 	function startCountdown():Void
 	{
 		inCutscene = false;
-
+		
+		#if android
+                androidc.visible = true;
+                #end
+			
 		generateStaticArrows(0);
 		generateStaticArrows(1);
 
@@ -3006,6 +3014,9 @@ class PlayState extends MusicBeatState
 		vocals.volume = 0;
 		FlxG.sound.music.pause();
 		vocals.pause();
+		#if android
+                androidc.visible = false;
+                #end
 		if (SONG.validScore)
 		{
 			// adjusting the highscore song name to be compatible
@@ -3067,7 +3078,6 @@ class PlayState extends MusicBeatState
 
 					if (SONG.validScore)
 					{
-						NGio.unlockMedal(60961);
 						Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 					}
 
